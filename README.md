@@ -16,6 +16,14 @@ This is a project using yfinance to access Yahoo Finance's publicly available AP
 
 - Project started June 9, 2025 | **WORK IN PROGRESS**
 
+### Changelog
+
+- 6/10/2025 4:15pm :
+  - Added 2year stock percentage change & a scoring system
+
+- 6/9/2025 8:00pm :
+  - Created repo, installed yfinance
+
 ### Sources
 - [yfinance](https://github.com/ranaroussi/yfinance)
 
