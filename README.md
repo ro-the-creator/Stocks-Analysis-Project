@@ -1,10 +1,10 @@
 # Stock Analysis Project
 <p align='center'>
-This is a project using yfinance to access Yahoo Finance's publicly available APIs. Several functions within scripts will run an analysis on any given stock and give it a scored valuation that will help you determine whether the stock is worth buying.
+This is a project using the yfinance API to access Yahoo Finance's publicly available financial and market data. Several functions within scripts will run an analysis on any given stock and give it a scored valuation that will help you determine whether the stock is worth buying.
 </p>
 
 ![](https://miro.medium.com/v2/resize:fit:1400/1*_12VG957NJA854PvZFJNDA.png)
-
+skfdgjhdsfgkls
 
 ## Project Info
 
@@ -27,7 +27,7 @@ This is a project using yfinance to access Yahoo Finance's publicly available AP
 ### Sources
 - [yfinance](https://github.com/ranaroussi/yfinance)
 
-- [Yahoo Finance's](https://finance.yahoo.com/)
+- [Yahoo Finance](https://finance.yahoo.com/)
 
 ***
 
