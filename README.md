@@ -21,7 +21,7 @@ skfdgjhdsfgkls
 - 6/12/2025 3:22pm :
   - Added trailing PE ratio + scoring system
   - Updated Stock-Analysis-Project.py
-  - Added stock analysis to_csvs folder to import .csv's of stock info
+  - Added stock_info_csvs folder to import .csv's of stock info
 
 - 6/11/2025 3:57pm :
   - Added 6mo stock percentage change + scoring system
