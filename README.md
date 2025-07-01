@@ -34,6 +34,15 @@ skfdgjhdsfgkls
 - 6/9/2025 8:00pm :
   - Created repo, installed yfinance
 
+- 7/1/2025 5:28pm :
+  - Simplified PE ratio code lines
+  - used `try:` statements to account for errors
+
+```c++
+dict =  stock_for_analysis_choice.info
+stock_trailingPE = dict.get('trailingPE')
+```
+
 ### Sources
 - [yfinance](https://github.com/ranaroussi/yfinance)
 
