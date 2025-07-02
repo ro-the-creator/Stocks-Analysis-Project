@@ -38,10 +38,10 @@ skfdgjhdsfgkls
   - Simplified PE ratio code lines
   - used `try:` statements to account for errors
 
-```c++
-dict =  stock_for_analysis_choice.info
-stock_trailingPE = dict.get('trailingPE')
-```
+- 7/2/2025 7:46pm :
+  - added new files implementing class `StockAnalyzer:`
+  - simplified analytical functions into methods.
+
 
 ### Sources
 - [yfinance](https://github.com/ranaroussi/yfinance)
