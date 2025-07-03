@@ -6,6 +6,7 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 # Stock Analyzer class
+
 class StockAnalyzer:
      def __init__(self):
           ticker = input('Pick a Ticker (Do not include "$")')
@@ -19,7 +20,7 @@ class StockAnalyzer:
         if len(self.data) == 0:
             print("Ticker invalid. Did you exclude the dollar sign?")
         else:
-            print(f"Data for ${self.ticker.upper()} received.")
+            print(f"Data for ${self.ticker.upper()} received. Contains {len(self.data)} rows.")
             print(f"Company Name: {stock.info['shortName']}")
      
      def percent_change(self, period='2d'):
@@ -29,21 +30,34 @@ class StockAnalyzer:
          perc_change = ((df['Close'][-1] - df['Close'][0]) / df['Close'][0]) * 100
          print(f"Percent Change over {str(period)}: {perc_change:.2f}%")
 
-     def detect_flagpole(self, window=5, growth_threshold=0.05):
-         recent_window = self.data['Close'].iloc[-window:]
-         percent_change = (recent_window.iloc[-1]-recent_window.iloc[0]) / recent_window.iloc[0]
-         print(f"Flagpole change: {percent_change:.2%} over {window} days.")
+     def detect_flagpole(self, pole_window=5, flag_window=7, growth_threshold=0.05):
+         recent_window = self.data['Close'].iloc[-(pole_window + flag_window):-flag_window]
+         percent_change = ((recent_window.iloc[-1]-recent_window.iloc[0]) / recent_window.iloc[0]) * 100
+         print(f"Flagpole change: {percent_change:.2f}% over {pole_window} days before flag splice.")
          return percent_change > growth_threshold
 
+     def detect_flag(self, flag_window=7, growth_threshold=0.01):
+         recent_window = self.data['Close'].iloc[-flag_window:]
+         percent_change = ((recent_window.iloc[-1] - recent_window.iloc[0]) / recent_window.iloc[0]) * 100
+         print(f"Flag change: {percent_change:.2f}% over {flag_window} days after flagpole.")
+         return percent_change < growth_threshold
+
+     def detect_flag_pattern(self, pole_window=5, flag_window=7):
+         if self.detect_flagpole and self.detect_flag is True:
+             print("Bull Flag Detected.")
+         elif self.detect_flagpole and self.detect_flag is not True:
+             print("Bull Flag not Detected.")
+
      def pe_ratio(self):
-        stock = self.yf
-        dict = stock.info
-        stock_trailingPE = dict.get('trailingPE')
-        try:
+         stock = self.yf
+         dict = stock.info
+         stock_trailingPE = dict.get('trailingPE')
+         try:
             stock_trailingPE = float(stock_trailingPE)
-        except (TypeError, ValueError):
-            stock_trailingPE = "Not Available"
-        print(f"Trailing PE Ratio: {stock_trailingPE:.2f}")
+            print(f"Trailing PE Ratio: {stock_trailingPE:.2f}")
+         except (TypeError, ValueError):
+            print(f"Trailing PE Ratio: Not Available")
+
 
 stock = StockAnalyzer()     
 stock.fetch_data()

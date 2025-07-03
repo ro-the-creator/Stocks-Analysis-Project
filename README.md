@@ -4,7 +4,6 @@ This is a project using the yfinance API to access Yahoo Finance's publicly avai
 </p>
 
 ![](https://miro.medium.com/v2/resize:fit:1400/1*_12VG957NJA854PvZFJNDA.png)
-skfdgjhdsfgkls
 
 ## Project Info
 
@@ -42,11 +41,19 @@ skfdgjhdsfgkls
   - added new files implementing class `StockAnalyzer:`
   - simplified analytical functions into methods.
 
+- 7/3/2025 5:13pm :
+  - converted old procedural code into classes
+  - added bull flag detection
 
 ### Sources
 - [yfinance](https://github.com/ranaroussi/yfinance)
+  - GitHub repository to ranaroussi's yfinance API
 
 - [Yahoo Finance](https://finance.yahoo.com/)
+  - Data scraped from API
+
+- [w3 Resources](https://www.w3resource.com/index.php)
+  - Tons of help from back-end tutorials
 
 ***
 
