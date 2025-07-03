@@ -5,9 +5,7 @@ This is a project using the yfinance API to access Yahoo Finance's publicly avai
 
 ![](https://miro.medium.com/v2/resize:fit:1400/1*_12VG957NJA854PvZFJNDA.png)
 
-## Project Info
-
-### Overview
+## Overview
 
 - Created by Rolando Mancilla-Rojas
    * My [GitHub](https://github.com/ro-the-creator)
@@ -15,24 +13,36 @@ This is a project using the yfinance API to access Yahoo Finance's publicly avai
 
 - Project started June 9, 2025 | **WORK IN PROGRESS**
 
-### Changelog
+## Sources
+- [yfinance](https://github.com/ranaroussi/yfinance)
+  - GitHub repository to ranaroussi's yfinance API
+
+- [Yahoo Finance](https://finance.yahoo.com/)
+  - Data scraped from API
+
+- [w3 Resources](https://www.w3resource.com/index.php)
+  - Tons of help from back-end tutorials
+
+## Changelog
+
+### June
+- 6/9/2025 8:00pm :
+  - Created repo, installed yfinance
+
+- 6/10/2025 4:15pm :
+  - Added 2year stock percentage change
+  - Created a scoring system
+
+- 6/11/2025 3:57pm :
+  - Added 6mo stock percentage change + scoring system
+  - Created Stock-Analysis-Project.py
 
 - 6/12/2025 3:22pm :
   - Added trailing PE ratio + scoring system
   - Updated Stock-Analysis-Project.py
   - Added stock_info_csvs folder to import .csv's of stock info
 
-- 6/11/2025 3:57pm :
-  - Added 6mo stock percentage change + scoring system
-  - Created Stock-Analysis-Project.py
-
-- 6/10/2025 4:15pm :
-  - Added 2year stock percentage change
-  - Created a scoring system
-
-- 6/9/2025 8:00pm :
-  - Created repo, installed yfinance
-
+### July
 - 7/1/2025 5:28pm :
   - Simplified PE ratio code lines
   - used `try:` statements to account for errors
@@ -44,16 +54,6 @@ This is a project using the yfinance API to access Yahoo Finance's publicly avai
 - 7/3/2025 5:13pm :
   - converted old procedural code into classes
   - added bull flag detection
-
-### Sources
-- [yfinance](https://github.com/ranaroussi/yfinance)
-  - GitHub repository to ranaroussi's yfinance API
-
-- [Yahoo Finance](https://finance.yahoo.com/)
-  - Data scraped from API
-
-- [w3 Resources](https://www.w3resource.com/index.php)
-  - Tons of help from back-end tutorials
 
 ***
 
