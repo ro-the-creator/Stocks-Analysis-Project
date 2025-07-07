@@ -55,6 +55,10 @@ This is a project using the yfinance API to access Yahoo Finance's publicly avai
   - converted old procedural code into classes
   - added bull flag detection
 
+- 7/7/2025 6:06pm :
+  - added Volume/Avg Volume calculations
+  - cleaned up run_all() method
+
 ***
 
 > [!WARNING]
