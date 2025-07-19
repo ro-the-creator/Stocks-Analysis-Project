@@ -59,6 +59,10 @@ This is a project using the yfinance API to access Yahoo Finance's publicly avai
   - added Volume/Avg Volume calculations
   - cleaned up run_all() method
 
+- 7/19/2025 4:33pm :
+  - Finished scoring system, Stock-Analyzer.py
+    - Thanks to [Ayema](https://github.com/ayemaqu), [Kabbo](https://github.com/robinflew) for help with scoring code!
+  - Created app.py
 ***
 
 > [!WARNING]
