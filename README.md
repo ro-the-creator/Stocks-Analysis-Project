@@ -63,6 +63,10 @@ This is a project using the yfinance API to access Yahoo Finance's publicly avai
   - Finished scoring system, Stock-Analyzer.py
     - Thanks to [Ayema](https://github.com/ayemaqu), [Kabbo](https://github.com/robinflew) for help with scoring code!
   - Created app.py
+
+- 7/22/2025 5:28pm :
+  - Debugging scoring system
+ 
 ***
 
 > [!WARNING]
