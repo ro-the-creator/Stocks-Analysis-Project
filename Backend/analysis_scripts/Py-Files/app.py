@@ -1,2 +1,5 @@
 from flask import Flask, render_template, request
-from Stock-Analyzer import StockAnalyzer
+from Stock_Analyzer import StockAnalyzer
+
+stock = StockAnalyzer()
+stock.run_all()
