@@ -72,11 +72,11 @@ class StockAnalyzer:
 
         # pe ratio score
          pe_ratio = self.pe_ratio()
-         scorechart_pe = {'score': list(range(1,11))}
+         scorechart_pe = {'score': list(range(1,21,2))}
          scpe = pd.DataFrame(scorechart_pe)
          results_pe = []
 
-         if pe_ratio >= 52:
+         if pe_ratio > 51:
             results_pe.append(True)
          else:
             results_pe.append(False)
@@ -87,7 +87,7 @@ class StockAnalyzer:
                results_pe.append(True)
             else:
                results_pe.append(False)
-         if pe_ratio <= 0.9:
+         if pe_ratio < 11:
             results_pe.append(True)
          else:
             results_pe.append(False)
@@ -98,11 +98,11 @@ class StockAnalyzer:
 
         # percent change 2y score
          percent_2y = self.percent_change(period='2y')
-         scorechart_2y6mo = {'score': list(range(10,0, -1))}
+         scorechart_2y6mo = {'score': list(range(20,0, -2))}
          sc2y6mo = pd.DataFrame(scorechart_2y6mo)
          results_2y = []
 
-         if percent_2y >= 102:
+         if percent_2y > 101:
             results_2y.append(True)
          else:
             results_2y.append(False)
@@ -113,7 +113,7 @@ class StockAnalyzer:
                 results_2y.append(True)
             else:
                 results_2y.append(False)
-         if percent_2y <= 1:
+         if percent_2y < 21:
             results_2y.append(True)
          else:
             results_2y.append(False)
@@ -126,7 +126,7 @@ class StockAnalyzer:
          percent_6mo = self.percent_change(period='6mo')
          results_6mo = []
 
-         if percent_6mo >= 102:
+         if percent_6mo > 101:
             results_6mo.append(True)
          else:
             results_6mo.append(False)
@@ -137,7 +137,7 @@ class StockAnalyzer:
                 results_6mo.append(True)
             else:
                 results_6mo.append(False)
-         if percent_6mo <= 1:
+         if percent_6mo < 21:
             results_6mo.append(True)
          else:
             results_6mo.append(False)
@@ -148,22 +148,22 @@ class StockAnalyzer:
 
          # percent change 2d score
          percent_2d = self.percent_change(period='2d')
-         scorechart_2d = {'score': list(range(10,0, -1))}
+         scorechart_2d = {'score': list(range(20,0, -2))}
          sc2d = pd.DataFrame(scorechart_2d)
          results_2d = []
 
-         if percent_2d >= 21:
+         if percent_2d > 21:
             results_2d.append(True)
          else:
             results_2d.append(False)
          for z in range(0,8):
             higher_2d = 21-z*2.5
-            lower_2d = higher_2d - 2
+            lower_2d = higher_2d - 2.5
             if lower_2d <= percent_2d <= higher_2d:
                results_2d.append(True)
             else:
                results_2d.append(False)
-         if percent_2d <= 2:
+         if percent_2d < 1:
             results_2d.append(True)
          else:
             results_2d.append(False)
@@ -179,18 +179,18 @@ class StockAnalyzer:
          volume_change = ((volume - avg_volume)/avg_volume)*100
          results_volume = []
 
-         if volume_change >= 21:
+         if volume_change > 21:
             results_volume.append(True)
          else:
             results_volume.append(False)
          for d in range(0,8):
             higher_vol = 21-d*2.5
-            lower_vol = higher_vol-2
+            lower_vol = higher_vol-2.5
             if lower_vol <= volume_change <= higher_vol:
                results_volume.append(True)
             else:
                results_volume.append(False)
-         if volume_change <= 2:
+         if volume_change < 1:
                results_volume.append(True)
          else:
                results_volume.append(False)
@@ -199,7 +199,7 @@ class StockAnalyzer:
          sc2d_vol_true = sc2d[sc2d['volume_truefalse']==True]['score'].iloc[0]
 
          final_score = scpe_true + sc2y_true + sc6mo_true + sc2d_true + sc2d_vol_true
-         print(f'Score: {final_score}/50')            
+         print(f'Score: {final_score}/100')            
 
 
 
@@ -232,7 +232,7 @@ class StockAnalyzer:
          volume = self.volume_check(type='volume')
          avg_volume = self.volume_check(type='averageVolume')
          print(f'Current Stock Volume: {volume}. Average Volume: {avg_volume}')
-         print(f'${self.ticker.upper()} volume change is {((volume - avg_volume)/avg_volume)*100:.2f}%.')
+         print(f'${self.ticker.upper()} volume difference is {((volume - avg_volume)/avg_volume)*100:.2f}%.')
          if volume > (avg_volume * 1.05):
              print('Stock volume is above average volume --> High interest.')
          if (avg_volume*1.05) > volume > (avg_volume*0.95):
