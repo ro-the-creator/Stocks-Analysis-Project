@@ -9,8 +9,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 # Stock Analyzer class
 
 class StockAnalyzer:
-     def __init__(self):
-          ticker = input('Pick a Ticker (Do not include "$")')
+     def __init__(self, ticker):
           self.ticker = ticker
           self.yf = yf.Ticker(ticker)
           self.info = self.yf.info
@@ -18,13 +17,7 @@ class StockAnalyzer:
     
      def fetch_data(self, period='6mo', interval='1d'):
         self.hist = self.yf.history(period=period, interval=interval)
-        if len(self.hist) == 0:
-            print('--------------------------------------------------')
-            print("Ticker invalid. Did you exclude the dollar sign?")
-            print('--------------------------------------------------')
-        else:
-            print(f"Data for ${self.ticker.upper()} received. Contains {len(self.hist)} rows.")
-            print(f"Company Name: {self.yf.info['shortName']}")
+        return self.hist
      
      def percent_change(self, period='2d'):
          stock_hist = self.yf.history(period=period)
@@ -37,23 +30,15 @@ class StockAnalyzer:
          recent_window = self.hist['Close'].iloc[-(pole_window + flag_window):-flag_window]
          percent_change = ((recent_window.iloc[-1]-recent_window.iloc[0]) / recent_window.iloc[0])
          percent_change100 = percent_change * 100
-         print(f"Flagpole change: {percent_change100:.2f}% over {pole_window} days before flag splice.")
          self.pole_check = percent_change >= pole_threshold
+         return percent_change100
 
      def detect_flag(self, flag_window=7, flag_threshold=0.01):
          recent_window = self.hist['Close'].iloc[-flag_window:]
          percent_change = ((recent_window.iloc[-1] - recent_window.iloc[0]) / recent_window.iloc[0])
          percent_change100 = percent_change * 100
-         print(f"Flag change: {percent_change100:.2f}% over {flag_window} days after flagpole.")
          self.flag_check = percent_change <= flag_threshold
-
-     def detect_flag_pattern(self):
-         if self.pole_check == True and self.flag_check == True:
-             print("Bull Flag Detected. Confirm with Volume.")
-         elif self.pole_check == False or self.flag_check == False:
-             print("Bull Flag not Detected.")
-         else:
-             print('Error')
+         return percent_change100
 
      def pe_ratio(self):
          stock_trailingPE = self.info.get('trailingPE')
@@ -107,7 +92,7 @@ class StockAnalyzer:
          else:
             results_2y.append(False)
          for y in range(0,8):
-            higher_2y6mo = 101 - y*12
+            higher_2y6mo = 101 - y*10
             lower_2y6mo = higher_2y6mo - 10
             if lower_2y6mo <= percent_2y <= higher_2y6mo:
                 results_2y.append(True)
@@ -152,18 +137,18 @@ class StockAnalyzer:
          sc2d = pd.DataFrame(scorechart_2d)
          results_2d = []
 
-         if percent_2d > 21:
+         if percent_2d > 3:
             results_2d.append(True)
          else:
             results_2d.append(False)
          for z in range(0,8):
-            higher_2d = 21-z*2.5
-            lower_2d = higher_2d - 2.5
+            higher_2d = 3-z*0.3
+            lower_2d = higher_2d - 0.3
             if lower_2d <= percent_2d <= higher_2d:
                results_2d.append(True)
             else:
                results_2d.append(False)
-         if percent_2d < 1:
+         if percent_2d < 0.3:
             results_2d.append(True)
          else:
             results_2d.append(False)
@@ -172,7 +157,7 @@ class StockAnalyzer:
          sc2d_true = sc2d[sc2d['true_false']==True]['score'].iloc[0]
 
 
-         # volume change check
+         # volume change score
 
          volume = self.volume_check(type='volume')
          avg_volume = self.volume_check(type='averageVolume')
@@ -199,49 +184,67 @@ class StockAnalyzer:
          sc2d_vol_true = sc2d[sc2d['volume_truefalse']==True]['score'].iloc[0]
 
          final_score = scpe_true + sc2y_true + sc6mo_true + sc2d_true + sc2d_vol_true
-         print(f'Score: {final_score}/100')            
+         return final_score            
 
 
 
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-     def run_all(self, pole_window=5, pole_threshold=0.05, flag_window=7, flag_threshold=0.01):
-         self.fetch_data()
-         print('----------------------------')
-         print('Percent Change:')
-         self.percent_change(period='2y')
-         print(f"Percent Change over {str(self.period)}: {self.percent_change(period='2y'):.2f}%")
-         self.percent_change(period='6mo')
-         print(f"Percent Change over {str(self.period)}: {self.percent_change(period='6mo'):.2f}%")
-         self.percent_change(period='2d')
-         print(f"Percent Change over {str(self.period)}: {self.percent_change(period='2d'):.2f}%")
-         print('----------------------------')
-         print('P/E Ratio:')
-         stock_trailingPE = self.pe_ratio()
-         if stock_trailingPE != 0:
-            print(f"Trailing PE Ratio: {stock_trailingPE:.2f}")
-         if stock_trailingPE == 0:
-            print(f"Trailing PE Ratio: Not Available")
-         print('----------------------------')
-         print('Bull Flag Detection:')
-         self.detect_flagpole(pole_window=pole_window, flag_window=flag_window, pole_threshold=pole_threshold)
-         self.detect_flag(flag_window=flag_window, flag_threshold=flag_threshold)
-         self.detect_flag_pattern()
-         print('----------------------------')
-         print('Volume:')
-         volume = self.volume_check(type='volume')
-         avg_volume = self.volume_check(type='averageVolume')
-         print(f'Current Stock Volume: {volume}. Average Volume: {avg_volume}')
-         print(f'${self.ticker.upper()} volume difference is {((volume - avg_volume)/avg_volume)*100:.2f}%.')
-         if volume > (avg_volume * 1.05):
-             print('Stock volume is above average volume --> High interest.')
-         if (avg_volume*1.05) > volume > (avg_volume*0.95):
-             print('Stock volume is near average volume --> Average interest.')
-         if (avg_volume*0.95) > volume:
-             print('Stock volume is below average volume --> Low general interest.')
-         print('----------------------------')
-         self.score()
-         print("WARNING: This is not financial advice. Conduct your own research before purchasing stocks.")
+     def report_it(self):
+        report = {}
+        self.fetch_data()
+        if len(self.hist) == 0:
+            report['fetch_data'] = "Ticker invalid. Did you exclude the dollar sign?"
+        else:
+            report['fetch_data'] = f"Data for ${self.ticker.upper()} received. Contains {len(self.hist)} rows." 
+            report['company_name'] = self.yf.info['shortName']
+            report['2y_change'] = round(float(self.percent_change(period='2y')),2)
+            report['6mo_change'] = round(float(self.percent_change(period='6mo')),2)
+            report['2d_change'] = round(float(self.percent_change(period='2d')),2)
+        
+            stock_trailingPE = self.pe_ratio()
+            if stock_trailingPE != 0:
+               report['trailing_pe'] = stock_trailingPE
+            if stock_trailingPE == 0:
+               report['trailing_pe'] = "Not Available"
 
-stock = StockAnalyzer()
-stock.run_all(pole_window=5, pole_threshold=0.05, flag_window=7, flag_threshold=0.01)
+            report['flagpole_change'] = f"{self.detect_flagpole(pole_window=5, flag_window=7, pole_threshold=0.05):.2f}% over 5 days before flag splice."
+            report['flag_change'] = f"{self.detect_flag(flag_window=7, flag_threshold=0.01):.2f}% over 2 days after flagpole."
+            if self.pole_check == True and self.flag_check == True:
+               report['bull_flag_detector'] = "Bull Flag Detected. Confirm with Volume."
+            elif self.pole_check == False or self.flag_check == False:
+               report['bull_flag_detector'] = "Bull Flag not Detected."
+            else:
+               report['bull_flag_detector'] = 'Error'
+
+            volume = self.volume_check(type='volume')
+            avg_volume = self.volume_check(type='averageVolume')
+            report['volume'] = volume
+            report['avg_volume'] = avg_volume
+            report['volume_difference'] = f"{((volume - avg_volume)/avg_volume)*100:.2f}%"
+            if volume > (avg_volume * 1.05):
+               report['volume_check'] = 'Stock volume is above average volume --> High interest.'
+            if (avg_volume*1.05) > volume > (avg_volume*0.95):
+               report['volume_check'] = 'Stock volume is near average volume --> Average interest.'
+            if (avg_volume*0.95) > volume:
+               report['volume_check'] = 'Stock volume is below average volume --> Low general interest.'
+            else:
+               report['volume_check'] = 'Error'
+
+            report['final_score'] = f'Score: {self.score()}/100'
+            report['warning'] = "WARNING: This is not financial advice. Conduct your own research before purchasing stocks."
+        return report
+
+
+
+
+# Stock Analyzer argument is the stock ticker, will take input from frontend to receive a report in list format
+
+# stock = StockAnalyzer(STOCK TICKER)
+# stock_report = stock.report_it()
+
+
+
+# Or converted to DataFrame
+
+# stock_df = pd.DataFrame(stock_report, index=[0])
