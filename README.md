@@ -1,9 +1,13 @@
 # Stock Analysis Project
-<p align='center'>
+<div align='center'>
 This is a project using the yfinance API to access Yahoo Finance's publicly available financial and market data. Several functions within scripts will run an analysis on any given stock and give it a scored valuation that will help you determine whether the stock is worth buying.
-</p>
 
-![](https://miro.medium.com/v2/resize:fit:1400/1*_12VG957NJA854PvZFJNDA.png)
+<br>
+<br>
+
+<img width="750" height="485" alt="image" src="https://github.com/user-attachments/assets/f46d2e4d-0f31-4fa6-93e2-9b24c96a9a43" />
+
+</div>
 
 ## Overview
 
@@ -12,6 +16,8 @@ This is a project using the yfinance API to access Yahoo Finance's publicly avai
    * My [LinkedIn](https://www.linkedin.com/in/rolandoma33/)
 
 - Project started June 9, 2025 | **WORK IN PROGRESS**
+
+---
 
 ## Sources
 - [yfinance](https://github.com/ranaroussi/yfinance)
@@ -22,6 +28,35 @@ This is a project using the yfinance API to access Yahoo Finance's publicly avai
 
 - [w3 Resources](https://www.w3resource.com/index.php)
   - Tons of help from back-end tutorials
+ 
+- [v0](https://v0.app)
+  - Used to create the frontend website
+
+---
+
+## Quick Start
+
+Run these commands from the project root:
+
+```bash
+pnpm install
+python3 -m pip install -r backend/requirements.txt
+pnpm dev
+```
+
+Then open http://localhost:3000
+
+If you use npm instead of pnpm:
+
+```bash
+npm install
+python3 -m pip install -r backend/requirements.txt
+npm run dev
+```
+
+More information for dependencies can be found [here](stock-analysis-tool/README.md).
+
+---
 
 ## Changelog
 
