@@ -67,6 +67,10 @@ This is a project using the yfinance API to access Yahoo Finance's publicly avai
 - 7/22/2025 5:28pm :
   - Debugging scoring system
  
+- 5/27/2026 3:26pm :
+  - Connected backend components to newly-created frontend website.
+  - Utilized Flask for API integration
+  - Website created with [v0 Website Builder](https://v0.app/)
 ***
 
 > [!WARNING]
