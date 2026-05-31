@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# macOS
+.DS_Store
+
 # dependencies
 /node_modules
 
@@ -18,6 +21,12 @@ yarn-error.log*
 
 # env files
 .env*
+
+# python virtual environments
+.venv/
+venv/
+env/
+ENV/
 
 # vercel
 .vercel
